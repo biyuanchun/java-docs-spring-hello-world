@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import com.example.demo.dao.UserDao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,9 @@ public class Usercontroller {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private UserDao userDao;
+
 
 
     static  final  String WEBSITES="https://cloud-producer.azurewebsites.net/";
@@ -49,7 +53,19 @@ public class Usercontroller {
         User user = restTemplate.getForObject(url, User.class,map);
         return user;
     }
+    
+    @RequestMapping("/insert/{id}")
+    public Integer InsertById(@PathVariable(value = "id") Integer id) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("id",id);
+        String url = WEBSITES+"user/find/{id}";
+        User user = restTemplate.getForObject(url, User.class,map);
+        int userID = (int) ((Math.random() * 9 + 1) * 10000);
+        user.setId(userID);
+        int insertCount = userDao.insert(user);
+        return insertCount;
+    }
 
-
+    
 
 }
