@@ -14,24 +14,21 @@ public class Usercontroller {
 
     @Autowired
     private RestTemplate restTemplate;
+    static  final  String WEBSITES="https://cloud-producer.azurewebsites.net/";
+
     
    @RequestMapping("/test-ok")
     public String testOk() {
         return "ok";
     }
 
-    @RequestMapping("/find-provider1")
-    public Long findUserByIdprovider1(){
-        String url = "https://csqweb.azurewebsites.net/getCount";
-        return restTemplate.getForObject(url, Long.class);
+    @RequestMapping("/select-count")
+    public Integer selectCount(){
+        String url = WEBSITES+"user/select-count";
+        return restTemplate.getForObject(url, Integer.class);
     }
 
-    @RequestMapping("/find-provider2")
-    public String findUserByIdprovider2(){
-        String url = "https://csqweb.azurewebsites.net/findAll";
-        return restTemplate.getForObject(url, String.class);
-    }
-    
+ 
 
 
 
