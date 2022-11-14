@@ -27,5 +27,10 @@ public class UserServiceImpl implements UserService {
         return users;
 
     }
+     
+    @Override
+    public int deleteById(Integer id) {
+        return userDao.deleteById(id);
+    }
 
 }
