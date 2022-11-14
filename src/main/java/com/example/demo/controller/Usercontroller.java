@@ -22,8 +22,9 @@ public class Usercontroller {
     private UserDao userDao;
 
 
+    private    static   String WEBSITES="https://cloud-producer.azurewebsites.net/";
 
-    static  final  String WEBSITES="https://cloud-producer.azurewebsites.net/";
+    private    static  String WEBSITES1="https://user-server.azurewebsites.net/customers/";
 
     @RequestMapping("/select-count")
     public Integer selectCount(){
@@ -65,6 +66,13 @@ public class Usercontroller {
         int insertCount = userDao.insert(user);
         return insertCount;
     }
+    @RequestMapping("/rest-list")
+    public String listAll(){
+        String url = WEBSITES1+"list";
+        return restTemplate.getForObject(url, String.class);
+    }
+
+
 
     
 
