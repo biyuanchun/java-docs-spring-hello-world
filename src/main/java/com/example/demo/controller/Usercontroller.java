@@ -12,15 +12,11 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/consumer")
 public class Usercontroller {
 
+
+    
     @Autowired
     private RestTemplate restTemplate;
     static  final  String WEBSITES="https://cloud-producer.azurewebsites.net/";
-
-    
-   @RequestMapping("/test-ok")
-    public String testOk() {
-        return "ok";
-    }
 
     @RequestMapping("/select-count")
     public Integer selectCount(){
@@ -28,9 +24,31 @@ public class Usercontroller {
         return restTemplate.getForObject(url, Integer.class);
     }
 
+    @RequestMapping("/find-user")
+    public List<User> findAllByDb() {
+        String url = WEBSITES+"user/find-user";
+        List<User> userList = restTemplate.getForObject(url, List.class);
+        return userList;
+    }
+
+    @RequestMapping("/get-cache-users")
+    public List<User> findAllByCache() {
+        String url = WEBSITES+"user/get-cache-users";
+        List<User> userList = restTemplate.getForObject(url, List.class);
+        return userList;
+    }
+
+    @RequestMapping("/find/{id}")
+    public User findUserById(@PathVariable(value = "id") Integer id) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("id",id);
+        String url = WEBSITES+"user/find/{id}";
+        User user = restTemplate.getForObject(url, User.class,map);
+        return user;
+    }
+
+
  
-
-
 
 
 }
